@@ -46,9 +46,40 @@ ProductRoutes.get('/product', async (req, res) => {
     orderBy: {
       name: 'desc',
     },
+    select: {
+      name: true,
+      image: true,
+      id: true,
+    },
   })
 
   return res.json(products)
+})
+
+ProductRoutes.get('/product/:id', async (req, res) => {
+  const id = req.params.id
+
+  try {
+    const product = await db.product.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        Shelf: {
+          include: {
+            Product: true,
+          },
+          orderBy: {
+            id: 'asc',
+          },
+        },
+      },
+    })
+
+    return res.json(product)
+  } catch (error) {
+    res.status(400).json({ message: 'Id nonexistent' })
+  }
 })
 
 ProductRoutes.delete('/product/:id', async (req, res) => {
@@ -66,45 +97,6 @@ ProductRoutes.delete('/product/:id', async (req, res) => {
     return res.status(500).json({ error: 'Id nonexistent' })
   }
 })
-
-// ProductRoutes.put('/product/:id', async (req, res) => {
-//   if (!req.files || !req.files.image) {
-//     res.status(400).json({ message: 'No image file provided' })
-//     return
-//   }
-
-//   const id = req.params.id
-
-//   const file = req.files.image as UploadedFile
-
-//   const { name, description } = req.body
-
-//   const result: UploadApiResponse = await cloudinary.uploader.upload(
-//     file.tempFilePath,
-//     {
-//       public_id: `${Date.now()}`,
-//       resource_type: 'auto',
-//       folder: 'images',
-//     },
-//   )
-
-//   try {
-//     const product = await db.product.update({
-//       where: {
-//         id,
-//       },
-//       data: {
-//         image: result.url,
-//         name,
-//         description,
-//       },
-//     })
-
-//     return res.json(product)
-//   } catch (error) {
-//     return res.status(500).json({ error: 'Id nonexistent' })
-//   }
-// })
 
 ProductRoutes.put('/product/:id', async (req, res) => {
   const id = req.params.id

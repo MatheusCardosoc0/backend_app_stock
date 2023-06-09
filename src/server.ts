@@ -1,6 +1,6 @@
 import Express from 'express'
 import ProductRoutes from './routes/Product'
-import ShellRoutes from './routes/Shell'
+import ShelfRoutes from './routes/Shelf'
 import fileUpload from 'express-fileupload'
 import cors from 'cors'
 
@@ -15,7 +15,7 @@ app.use(
 )
 
 app.use(ProductRoutes)
-app.use(ShellRoutes)
+app.use(ShelfRoutes)
 
 app.listen(
   {
