@@ -19,7 +19,7 @@ app.use(ShelfRoutes)
 
 app.listen(
   {
-    port: 3333,
+    port: process.env.PORT ? process.env.PORT : 3333,
   },
   () => console.log('server running in http://localhost:3333'),
 )
