@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Product {
-  id          String  @id @default(cuid())
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String
   image       String
@@ -19,7 +19,7 @@ model Product {
 }
 
 model Shelf {
-  id        String  @id @default(cuid())
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
   Product   Product @relation(fields: [productId], references: [id])
   Quantity  Int
   maturity  String

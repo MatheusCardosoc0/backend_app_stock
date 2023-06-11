@@ -57,4 +57,16 @@ ShelfRoutes.put('/shelf/:id', async (req, res) => {
   }
 })
 
+ShelfRoutes.delete('/shelf/:id', async (req, res) => {
+  const id = req.params.id
+
+  const deleteShelf = await db.shelf.delete({
+    where: {
+      id,
+    },
+  })
+
+  return res.json(deleteShelf)
+})
+
 export default ShelfRoutes
