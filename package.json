@@ -2,14 +2,12 @@
   "name": "backend_app_stock",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "engines": {
-    "node": "18"
-  },
+  "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "tsx watch src/server.ts"
+    "start": "ts-node src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +19,7 @@
     "@types/express-fileupload": "^1.4.1",
     "eslint": "^8.42.0",
     "prisma": "^4.15.0",
+    "ts-node": "^10.9.1",
     "tsup": "^6.7.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.3"
